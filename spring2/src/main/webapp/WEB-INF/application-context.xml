@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
+
+    <!-- bean definitions here -->
+    
+    <!-- HikariConfig hikafiConfig = new HikariConfig(); -->
+    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+        <!-- hikariConfig.setDriverClassName("...") method 호출 -->
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver" />
+        <property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+        <property name="username" value="scott"/>
+        <property name="password" value="tiger"/>
+    </bean> <!-- 기본 생성자 호출 -->
+    
+    <!-- HikariDataSource dataSource = new HikariDataSource(hikariConfig); 와 같은 코드. -->
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+        <constructor-arg ref="hikariConfig" />
+    </bean> <!-- 아규먼트가 있는 생성자 -->
+
+</beans>
