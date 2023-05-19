@@ -10,7 +10,7 @@
 
     <!-- bean definitions here -->
     
-    <!-- HikariConfig hikafiConfig = new HikariConfig(); -->
+    <!-- HikariConfig hikafiConfig = new HikariConfig(); 와 같은 코드. -->
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
         <!-- hikariConfig.setDriverClassName("...") method 호출 -->
         <property name="driverClassName" value="oracle.jdbc.OracleDriver" />
@@ -23,5 +23,19 @@
     <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
         <constructor-arg ref="hikariConfig" />
     </bean> <!-- 아규먼트가 있는 생성자 -->
-
+    
+    <!-- SqlSessionFactoryBean 객체   (Dao)
+        Data Source(Connection Pool)을 이용해서 SQL문장들을 실행하고 결과 처리를 수행하는 객체.
+    -->
+    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="mapperLocations" value="classpath:/mappers/**/*.xml" />
+    </bean>
+    
+    <!-- MyBatis 프레임워크에서 생성하고 관리하는 bean들을 base-package와 그 하위 패키지에서 검색. -->
+    <mybatis:scan base-package="com.itwill.spring2.repository"/>
+    
+    <!-- Service 애너테이션이 설정된 객체들을 생성하고 관리. -->
+    <context:component-scan base-package="com.itwill.spring2.service" />
+    
 </beans>

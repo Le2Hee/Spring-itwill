@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
@@ -29,7 +30,7 @@ public class HikariCPTest {
     // 스프링 컨테이너가 필요한 곳에 객체를 주입하는 개발 방식.
     
     @Autowired
-    @Qualifier("hikariConfig")
+    @Qualifier("hikariConfig") // -> 부모타입의 객체에 어떤걸 넣을지 몰라서 구별을 위해 사용.
     private HikariConfig config;
     
     /*
@@ -43,6 +44,9 @@ public class HikariCPTest {
     
     @Autowired
     private HikariDataSource ds;
+    
+    @Autowired
+    private SqlSessionFactoryBean sessionFactory;
     
     @Test
     public void testDataSource() throws SQLException {
@@ -58,6 +62,12 @@ public class HikariCPTest {
         
         conn.close(); // 사용했던 Connection을 Data Source에 반환.
         log.info("conn close 성공");
+    }
+    
+    @Test
+    public void testSqlSession() {
+        Assertions.assertNotNull(sessionFactory);
+        log.info("sessionFactory={}", sessionFactory);
     }
     
 }
