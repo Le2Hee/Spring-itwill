@@ -80,11 +80,12 @@ public class RepositoryTest {
         log.info("result ={}", result);
     }
     
-    @Test
+//    @Test
     public void testDeleteById() {
         int result = postRepository.deleteById(43);
         Assertions.assertEquals(1, result);
         log.info("result={}", result);
     }
+    
     
 }

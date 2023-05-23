@@ -5,6 +5,16 @@
 <mapper namespace="com.itwill.spring2.repository.PostRepository">
     <!-- namespace값은 PostRepository 인터페이스가 있는 패키지 이름과 인터페이스 이름. -->
     
+    <select id="selectWithReplyCount" resultType="com.itwill.spring2.dto.PostListDto">
+            <!-- 별명으로 준 RCNT는 Dto에서 변수선언할 때 사용한 이름.
+                별명을 안주면 jsp에서 찾을 수 가 없기 때문에 설정해주어야 한다. -->
+        select P.ID, P.TITLE, P.AUTHOR, P.CREATED_TIME, count(R.ID) as RCNT
+        from POSTS P left join REPLIES R
+            on P.ID = R.POST_ID
+        group by P.ID, P.TITLE, P.AUTHOR, P.CREATED_TIME <!-- 그룹이 있어야 count를 쓸 수 있다. -->
+        order by P.ID desc
+    </select>
+    
     <!-- id의 값은 PostRepository 인터페이스에서 선언하는 메서드 이름. -->
     
     <insert id="insert" >
@@ -29,5 +39,7 @@
     <delete id="deleteById">
         delete from POSTS where ID = #{id}
     </delete>
+    
+    
     
 </mapper>

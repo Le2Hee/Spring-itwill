@@ -57,10 +57,11 @@
                                         <c:param name="id" value="${ post.id }" />
                                     </c:url>
                                     <a href="${ postDetailPage }" >${ post.title }</a>
+                                    <span class="text-info">[${ post.rcnt }]</span>
                                 </td>
                                 <td class="text-center">${ post.author }</td>
                                 <td class="text-center">
-                                    <fmt:formatDate value="${ post.createdTime }" 
+                                    <fmt:formatDate value="${ post.created_time }" 
                                         pattern="yyyy-MM-dd HH:mm:ss"/>
                                 </td>
                             </tr>

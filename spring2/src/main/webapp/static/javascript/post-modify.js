@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const result = confirm(`${id}를 삭제하시겠습니까?`);
         
         if(result) {
-            form.action = 'delete';
+            form.action = './delete';
             form.method = 'post';
             form.submit();
         }
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const result = confirm(`${id}번 post를 업데이트할까요?`);
         
         if (result) {
-            form.action = 'update';
+            form.action = './update';
             form.method = 'post';
             form.submit();
         }
