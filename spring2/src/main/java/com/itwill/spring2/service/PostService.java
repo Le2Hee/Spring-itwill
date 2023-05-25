@@ -10,6 +10,7 @@ import com.itwill.spring2.dto.PostCreateDto;
 import com.itwill.spring2.dto.PostDetailDto;
 import com.itwill.spring2.dto.PostListDto;
 import com.itwill.spring2.repository.PostRepository;
+import com.itwill.spring2.repository.ReplyRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +40,8 @@ public class PostService {
     // final은 값을 넣어줘야되지만 @RequiredArgsConstructor로 생성자에 의한 의존성 주입을 시킨다.
     //                              -> 싱글톤
     
+    private final ReplyRepository replyRepository; // 하나의 service가 2개 table을 이용 가능.
+    
     // 포스트 목록 페이지
     public List<PostListDto> read() {
         log.info("read()");
@@ -65,9 +68,17 @@ public class PostService {
     public PostDetailDto read(long id) {
         log.info("read(id={})", id);
         
+        // DB POTST테이블에서 검색
         Post entity = postRepository.selectById(id);
         
-        return PostDetailDto.fromEntity(entity);
+        // 검색한 내용을 Dto로 변환
+        PostDetailDto dto = PostDetailDto.fromEntity(entity);
+        
+        // DB REPLIES 테이블에서 댓글 개수를 검색.
+        long count = replyRepository.selectReplyCountWithPostId(id);
+        dto.setReplyCount(count);
+        
+        return dto;
     }
     
     // 새 포스트 작성 페이지

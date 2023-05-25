@@ -19,6 +19,7 @@ public class PostDetailDto {
     private String author;
     private Timestamp createdTime;
     private Timestamp modifiedTime;
+    private long replyCount;
     
     //Post 타입 객체를 PostDetailDto 타입으로 변환해서 리턴.
     // static : PostDetailDto가 만들어지기 전에 만들어져 있어야하기 때문에
